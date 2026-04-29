@@ -1,0 +1,13 @@
+{
+  "name": "@agent-memory/supabase",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reference Supabase implementation for @agent-memory/core (migrations + edge functions). Not published to npm.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'No build step — Supabase migrations + Deno edge functions deploy directly.'",
+    "test": "echo 'No tests — see packages/core for unit tests.'",
+    "typecheck": "echo 'Skipped — Deno edge functions are typechecked by the Supabase CLI on deploy.'"
+  }
+}
