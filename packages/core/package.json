@@ -48,6 +48,10 @@
     "type": "git",
     "url": "https://github.com/onofre-jauregui/agent-memory"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "devDependencies": {
     "tsup": "^8.3.5",
     "typescript": "^5.6.3",
