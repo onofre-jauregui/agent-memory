@@ -1,5 +1,5 @@
 {
-  "name": "@agent-memory/core",
+  "name": "agent-memory-core",
   "version": "0.1.0",
   "description": "Memory + guardrails layer for AI agents — pure TypeScript, no SDK lock-in",
   "license": "MIT",
@@ -49,7 +49,6 @@
     "url": "https://github.com/onofre-jauregui/agent-memory"
   },
   "publishConfig": {
-    "access": "public",
     "registry": "https://registry.npmjs.org"
   },
   "devDependencies": {

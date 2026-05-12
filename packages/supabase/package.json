@@ -2,7 +2,7 @@
   "name": "@agent-memory/supabase",
   "version": "0.1.0",
   "private": true,
-  "description": "Reference Supabase implementation for @agent-memory/core (migrations + edge functions). Not published to npm.",
+  "description": "Reference Supabase implementation for agent-memory-core (migrations + edge functions). Not published to npm.",
   "license": "MIT",
   "type": "module",
   "scripts": {

@@ -1,6 +1,6 @@
 # Architecture
 
-`@agent-memory/core` is a small, pure-TypeScript library that supplies three things every production agent eventually needs:
+`agent-memory-core` is a small, pure-TypeScript library that supplies three things every production agent eventually needs:
 
 1. **Guardrails** — synchronous, side-effect-free checks that decide whether an action is safe to take.
 2. **Memory** — persistent, confidence-weighted lessons that survive across sessions.
@@ -14,7 +14,7 @@
 │   ├─ proposes action                         │
 │   └─ writes lessons after outcomes           │
 ├──────────────────────────────────────────────┤
-│  @agent-memory/core                          │
+│  agent-memory-core                          │
 │   ├─ guardrails/  evaluateRisk, kill-switch  │
 │   ├─ memory/      recall, save, update,      │
 │   │               compact                    │

@@ -20,7 +20,7 @@ import {
   type MemoryEntry,
   type MemoryStore,
   type MemorySearchOptions,
-} from "@agent-memory/core";
+} from "agent-memory-core";
 
 // ── In-memory store ─────────────────────────────────────────────
 function inMemoryStore(): MemoryStore {

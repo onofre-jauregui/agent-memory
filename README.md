@@ -6,7 +6,7 @@ Memory, guardrails, and a multi-LLM router for production AI agents. Carved out 
 
 ```
 packages/
-  core/      → @agent-memory/core (npm-publishable, framework-free)
+  core/      → agent-memory-core (npm-publishable, framework-free)
   supabase/  → reference Supabase implementation (migrations + edge functions)
 
 examples/
@@ -22,7 +22,7 @@ docs/
 ## Install
 
 ```bash
-pnpm add @agent-memory/core
+pnpm add agent-memory-core
 ```
 
 ## What you get
@@ -36,7 +36,7 @@ pnpm add @agent-memory/core
 ## Quickstart — guardrails
 
 ```ts
-import { evaluateRisk } from "@agent-memory/core";
+import { evaluateRisk } from "agent-memory-core";
 
 const settings = {
   per_action_cap: 100,
@@ -68,7 +68,7 @@ if (!result.allowed) {
 ## Quickstart — memory
 
 ```ts
-import { save, recall, confirm } from "@agent-memory/core";
+import { save, recall, confirm } from "agent-memory-core";
 
 // Persist a lesson tied to an action
 await save(store, {
@@ -94,7 +94,7 @@ await confirm(store, memoryId, { outcome_score: 1.0 });
 ## Quickstart — multi-provider chat
 
 ```ts
-import { chat } from "@agent-memory/core";
+import { chat } from "agent-memory-core";
 
 const { content, usage } = await chat({
   provider: "anthropic", // or "openai" | "openrouter" | "google"

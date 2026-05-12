@@ -3,7 +3,7 @@
  *
  * IMPORTANT: this is NOT Kalshi, NOT Polymarket, NOT any real exchange.
  * It exists only to demonstrate the `evaluateActionStream` pattern that
- * `@agent-memory/core` deliberately leaves to the host application.
+ * `agent-memory-core` deliberately leaves to the host application.
  */
 
 import {
@@ -15,7 +15,7 @@ import {
   type MemoryEntry,
   type MemoryStore,
   type MemorySearchOptions,
-} from "@agent-memory/core";
+} from "agent-memory-core";
 
 // ── Synthetic market ───────────────────────────────────────────
 interface BinaryEventOutcome {

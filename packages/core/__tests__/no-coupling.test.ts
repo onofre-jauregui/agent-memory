@@ -1,6 +1,6 @@
 /**
  * Enforces that no domain-specific tokens from the source private repo
- * leak into the public @agent-memory/core package. If this test fails,
+ * leak into the public agent-memory-core package. If this test fails,
  * sanitize the offending file before merging.
  */
 
@@ -43,7 +43,7 @@ function walk(dir: string): string[] {
   return out;
 }
 
-describe("no domain coupling in @agent-memory/core src", () => {
+describe("no domain coupling in agent-memory-core src", () => {
   const files = walk(SRC);
 
   for (const file of files) {

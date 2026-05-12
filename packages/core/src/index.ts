@@ -1,4 +1,4 @@
-// Public API for @agent-memory/core
+// Public API for agent-memory-core
 export * from "./types.js";
 export * from "./guardrails/index.js";
 export * from "./memory/index.js";

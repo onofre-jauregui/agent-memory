@@ -1,12 +1,12 @@
-# @agent-memory/core
+# agent-memory-core
 
 Memory, guardrails, and a multi-LLM router for production AI agents.  
 Pure TypeScript · `fetch`-only · no SDK dependencies · MIT.
 
 ```bash
-npm add @agent-memory/core
+npm add agent-memory-core
 # or
-pnpm add @agent-memory/core
+pnpm add agent-memory-core
 ```
 
 **Requires Node 18+ (or any runtime with Web Crypto + `fetch`).**
@@ -37,7 +37,7 @@ import {
   type RiskSettings,
   type RiskState,
   type ActionContext,
-} from "@agent-memory/core";
+} from "agent-memory-core";
 
 // 1. Guardrail — pure function, no I/O
 const settings: RiskSettings = {
@@ -111,7 +111,7 @@ interface MemorySearchOptions {
 ### Copy-paste in-memory implementation (no DB needed)
 
 ```ts
-import type { MemoryEntry, MemoryStore, MemorySearchOptions } from "@agent-memory/core";
+import type { MemoryEntry, MemoryStore, MemorySearchOptions } from "agent-memory-core";
 
 function makeInMemoryStore(): MemoryStore {
   let nextId = 1;
@@ -249,7 +249,7 @@ await update(store, "m_42", { title: "Updated title", tags: ["new-tag"] });
 Clusters related memories by tag overlap and optionally merges them via an LLM summarizer. Use this to keep context windows small after many agent runs.
 
 ```ts
-import { recall, compact, chat } from "@agent-memory/core";
+import { recall, compact, chat } from "agent-memory-core";
 
 const all = await recall(store, { limit: 200 });
 const result = await compact(store, all, {
@@ -301,7 +301,7 @@ import {
   type ActionContext,
   type RiskSettings,
   type RiskState,
-} from "@agent-memory/core";
+} from "agent-memory-core";
 
 const settings: RiskSettings = {
   max_position_size: 500,
@@ -341,7 +341,7 @@ evaluateRisk({ amount: 999999, mode: "simulate" }, settings, state); // { passed
 Sliding-window spend cap. Returns `{ tripped: true }` if accepting `proposed` would push the total over `cap.limit` within `cap.windowMs`.
 
 ```ts
-import { checkSpendingCap, type ActionEvent, type SpendingCap } from "@agent-memory/core";
+import { checkSpendingCap, type ActionEvent, type SpendingCap } from "agent-memory-core";
 
 const history: ActionEvent[] = [
   { amount: 40, timestamp: Date.now() - 30_000 },
@@ -358,7 +358,7 @@ const r = checkSpendingCap(history, { amount: 50, timestamp: Date.now() }, cap);
 Sliding-window action count cap.
 
 ```ts
-import { checkRateLimit, type RateLimit } from "@agent-memory/core";
+import { checkRateLimit, type RateLimit } from "agent-memory-core";
 
 const limit: RateLimit = { maxActions: 5, windowMs: 60_000 }; // 5 actions/minute
 const r = checkRateLimit(history, { amount: 1, timestamp: Date.now() }, limit);
@@ -371,7 +371,7 @@ const r = checkRateLimit(history, { amount: 1, timestamp: Date.now() }, limit);
 Build a structured audit event. Sink it wherever you want.
 
 ```ts
-import { buildEvent, type ComplianceSink } from "@agent-memory/core";
+import { buildEvent, type ComplianceSink } from "agent-memory-core";
 
 const event = buildEvent("risk_rejected", "warning", "Position size exceeded", {
   action_amount: 600,
@@ -395,7 +395,7 @@ Fetch-based LLM router. No SDK installed — uses the raw HTTP API of each provi
 **No env vars are read by this library.** You pass API keys explicitly on each call.
 
 ```ts
-import { chat } from "@agent-memory/core";
+import { chat } from "agent-memory-core";
 
 // Anthropic
 await chat({
@@ -435,7 +435,7 @@ interface ChatResult {
 AES-256-GCM via Web Crypto. Works in Node 18+, Deno, Bun, and modern browsers.
 
 ```ts
-import { importMasterKey, encryptSecret, decryptSecret } from "@agent-memory/core";
+import { importMasterKey, encryptSecret, decryptSecret } from "agent-memory-core";
 
 // Generate a key once: openssl rand -base64 32
 const key = await importMasterKey(process.env.MASTER_KEY!); // 32-byte base64 string
@@ -460,7 +460,7 @@ import {
   tenantInsertFields,
   loadTenantRow,
   type TenantContext,
-} from "@agent-memory/core";
+} from "agent-memory-core";
 
 // Resolve tenant from a JWT Authorization header
 const ctx: TenantContext = await resolveTenant(supabase, req.headers.get("authorization"));
@@ -476,9 +476,9 @@ const row = await loadTenantRow(supabase, ctx, "risk_settings", "user_settings")
 ## Subpath imports
 
 ```ts
-import { evaluateRisk } from "@agent-memory/core/guardrails";
-import { recall, save }  from "@agent-memory/core/memory";
-import { chat }          from "@agent-memory/core/providers";
+import { evaluateRisk } from "agent-memory-core/guardrails";
+import { recall, save }  from "agent-memory-core/memory";
+import { chat }          from "agent-memory-core/providers";
 ```
 
 ---

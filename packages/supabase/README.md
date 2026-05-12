@@ -1,6 +1,6 @@
 # @agent-memory/supabase
 
-Reference Supabase implementation of `@agent-memory/core`. **Not published to npm.** Copy what you need into your project.
+Reference Supabase implementation of `agent-memory-core`. **Not published to npm.** Copy what you need into your project.
 
 ## Contents
 

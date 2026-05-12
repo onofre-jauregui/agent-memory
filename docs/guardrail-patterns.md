@@ -1,6 +1,6 @@
 # Guardrail patterns
 
-Three guardrail layers ship with `@agent-memory/core/guardrails`:
+Three guardrail layers ship with `agent-memory-core/guardrails`:
 
 | Layer            | What it stops                          | When to use                  |
 |------------------|----------------------------------------|------------------------------|

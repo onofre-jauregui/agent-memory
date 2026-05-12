@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@agent-memory/core": "workspace:*"
+    "agent-memory-core": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.2",

@@ -1,5 +1,5 @@
 /**
- * Core public types for @agent-memory/core.
+ * Core public types for agent-memory-core.
  *
  * These types intentionally avoid any domain-specific terminology (trading,
  * markets, customer support, etc.). They describe a generic "agent acts on
