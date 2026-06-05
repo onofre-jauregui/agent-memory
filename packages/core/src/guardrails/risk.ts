@@ -94,14 +94,15 @@ export function evaluateRisk(
     }
   }
 
-  // 6. Single-action concentration: no action > 25% of peak portfolio value
+  // 6. Single-action concentration: no action > concentration_cap_pct of peak portfolio value
   if (state.peak_portfolio_value > 0) {
+    const cap = settings.concentration_cap_pct ?? 25;
     const concentrationPct = (amount / state.peak_portfolio_value) * 100;
-    if (concentrationPct > 25) {
+    if (concentrationPct > cap) {
       return {
         passed: false,
         code: "concentration_limit",
-        reason: `Action amount ${amount} exceeds 25% portfolio concentration limit (portfolio: ${state.peak_portfolio_value}).`,
+        reason: `Action amount ${amount} exceeds ${cap}% portfolio concentration limit (portfolio: ${state.peak_portfolio_value}).`,
       };
     }
   }

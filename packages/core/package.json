@@ -44,6 +44,10 @@
     "llm",
     "supabase"
   ],
+  "engines": { "node": ">=18.18.0" },
+  "bugs": { "url": "https://github.com/onofre-jauregui/agent-memory/issues" },
+  "homepage": "https://github.com/onofre-jauregui/agent-memory#readme",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/onofre-jauregui/agent-memory"

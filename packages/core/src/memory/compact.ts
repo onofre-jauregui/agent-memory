@@ -124,7 +124,9 @@ export async function compact(
               0
             ) / totalConf
           : cluster.reduce((s, m) => s + (m.confidence || 0.5), 0) / cluster.length;
-      const [type, contextId] = groupKey.split("::");
+      const parts = groupKey.split("::");
+      const type = parts[0]!;
+      const contextId = parts[1];
 
       const summaryWords = merged.content.split(/\s+/);
       const summary =

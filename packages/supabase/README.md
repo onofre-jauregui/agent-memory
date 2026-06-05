@@ -45,6 +45,28 @@ supabase functions deploy list-ai-models
 | `SUMMARIZER_MODEL`      | compact-memory         | Model name (default gpt-4o-mini) |
 | `ALLOWED_ORIGIN`        | all                    | CORS allowlist                   |
 
+## Security
+
+> **Warning — tighten RLS policies before going to production.**
+
+The reference migrations include Row Level Security policies that use `WITH CHECK (true)`, which permits any authenticated user to write to any row. This is intentional for the reference implementation (it keeps the migrations readable), but it is **not safe for multi-tenant production use**.
+
+Before deploying to production, replace the open `WITH CHECK (true)` clauses with user-scoped checks. Example for `agent_memory`:
+
+```sql
+-- Drop the open policy
+DROP POLICY IF EXISTS "allow_all_authenticated" ON agent_memory;
+
+-- Replace with a user-scoped policy
+CREATE POLICY "users_own_memories"
+  ON agent_memory
+  FOR ALL
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
+```
+
+Apply the same pattern to `risk_settings`, `risk_state`, and `compliance_log`. For service-role edge functions (like `auto-reflect`), pass the service role key — it bypasses RLS by design.
+
 ## Schedule auto-reflect
 
 Add a `pg_cron` row to run `auto-reflect` hourly:

@@ -44,6 +44,8 @@ export interface RiskSettings {
   max_open_positions: number;
   /** Drawdown percentage at which the agent must halt. */
   max_drawdown_pct: number;
+  /** Max position size as a percent of portfolio (0-100). Defaults to 25. */
+  concentration_cap_pct?: number;
 }
 
 /**

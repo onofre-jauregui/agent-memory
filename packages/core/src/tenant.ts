@@ -2,6 +2,18 @@
  * Multi-tenancy helpers — parameterized over table names so the same patterns
  * work across any schema. The original Supabase implementation hardcoded
  * "trades", "risk_settings", "risk_state"; here, the caller passes them in.
+ *
+ * These helpers are framework-agnostic. They depend only on two interfaces:
+ *  - `SupabaseLike` — any client that exposes `.from(table)` and optionally
+ *    `.auth.getUser(jwt)`. Supabase JS v2 satisfies this out of the box, but
+ *    you can implement it yourself for testing or for other databases.
+ *  - `Request` — the standard Web Platform `Request` object (available in
+ *    Node 18+, Deno, Bun, and browsers). The helpers read only the
+ *    `Authorization` header; no other parts of the request are touched.
+ *
+ * Typical usage in a Supabase Edge Function or Next.js Route Handler:
+ *   const tenant = await resolveTenant(req, supabase, body);
+ *   const row = await loadTenantRow(supabase, "my_table", tenant.userId);
  */
 
 export interface TenantContext {

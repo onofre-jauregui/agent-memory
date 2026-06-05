@@ -57,17 +57,38 @@ serve(async (req) => {
     let confirmed = 0;
     let contradicted = 0;
 
+    // Collect all action IDs up-front and fetch them in a single query.
+    const allActionIds = [
+      ...new Set(
+        (activeMemories || []).flatMap(
+          (m: { related_action_ids?: string[] }) => m.related_action_ids || []
+        )
+      ),
+    ];
+
+    const { data: allActions } = allActionIds.length > 0
+      ? await supabase
+          .from("actions")
+          .select("id, outcome_score, status")
+          .in("id", allActionIds)
+          .eq("status", "completed")
+      : { data: [] as { id: string; outcome_score?: number; status: string }[] };
+
+    // Build a lookup map so each memory can find its actions in O(1).
+    const actionById = new Map<string, { id: string; outcome_score?: number; status: string }>();
+    for (const a of allActions || []) {
+      actionById.set((a as { id: string; outcome_score?: number; status: string }).id, a as { id: string; outcome_score?: number; status: string });
+    }
+
     for (const mem of activeMemories || []) {
       const actionIds = (mem as { related_action_ids?: string[] }).related_action_ids || [];
       if (actionIds.length === 0) continue;
 
-      const { data: linkedActions } = await supabase
-        .from("actions")
-        .select("id, outcome_score, status")
-        .in("id", actionIds)
-        .eq("status", "completed");
+      const linkedActions = actionIds
+        .map((id) => actionById.get(id))
+        .filter((a): a is { id: string; outcome_score?: number; status: string } => a !== undefined);
 
-      if (!linkedActions || linkedActions.length === 0) continue;
+      if (linkedActions.length === 0) continue;
 
       const totalScore = linkedActions.reduce(
         (sum: number, a: { outcome_score?: number }) => sum + (Number(a.outcome_score) || 0),

@@ -2,6 +2,11 @@
 
 Memory, guardrails, and a multi-LLM router for production AI agents. Carved out of a production trading agent. **MIT.**
 
+## Requirements
+
+- **Node 18.18.0+** — this package targets the Web Crypto API and ES2022.
+- **ESM-only** — the package ships as pure ESM. Your project must use `"type": "module"` in `package.json`, or an ESM-aware bundler (Vite, esbuild, tsup, webpack 5). CommonJS `require()` is not supported.
+
 > Every agent that runs in production ends up rebuilding the same three layers — risk guardrails, persistent memory, and provider routing. This is those three layers, extracted clean. No SDK lock-in, no DB lock-in. Pure TypeScript. `fetch`-only.
 
 ```
@@ -39,17 +44,20 @@ pnpm add agent-memory-core
 import { evaluateRisk } from "agent-memory-core";
 
 const settings = {
-  per_action_cap: 100,
-  daily_loss_limit: 500,
+  max_position_size: 100,
+  max_daily_loss: 500,
+  max_open_positions: 10,
   max_drawdown_pct: 20,
   concentration_cap_pct: 25,
 };
 
 const state = {
-  daily_loss: 120,
-  open_exposure: 300,
-  peak_value: 1000,
-  current_value: 950,
+  date: new Date().toISOString().slice(0, 10),
+  is_trading_halted: false,
+  halt_reason: null,
+  daily_pnl: -120,
+  open_position_count: 3,
+  peak_portfolio_value: 1000,
 };
 
 const result = evaluateRisk(
@@ -58,7 +66,7 @@ const result = evaluateRisk(
   state,
 );
 
-if (!result.allowed) {
+if (!result.passed) {
   console.log(result.reason); // e.g. "concentration_limit"
   return;
 }
